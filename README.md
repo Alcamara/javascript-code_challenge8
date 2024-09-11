@@ -16,3 +16,13 @@ You are tasked with writing a program that simulates a simple vending machine. T
   - After processing all products, prints the total price.
 
 If an invalid product number is encountered (i.e., not 1, 2, or 3), it should print a message saying "Invalid product."
+
+## Requirements
+- [NodeJS](https://nodejs.org/en/download/package-manager/current)
+
+
+## Install
+Run `npm i`
+
+## Built With
+- [prompt](https://nodejs.org/en/download/package-manager/current)
