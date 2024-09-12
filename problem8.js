@@ -33,8 +33,7 @@ const SelectStatus = Object.freeze({
 async function userInput(inputType){
     try {
       let input = 0;
-      console.log(inputType);
-      
+    
       switch (inputType) {
         case "programStatus":
             const { programStatus } = await prompt.get("programStatus")
@@ -97,14 +96,15 @@ const msgPrompts = [
     "Welcome to Snack Fest!",
     "Do you want to purchase snack?",
     "Press 0 for Yes\nPress 1 for NO",
-    "Invalid product!",
+    "Invalid input!",
     "Thank you for stopping by, have a good day",
     "Please choose item Below:",
     "Would you like to select another Items?",
     "Great, let's checkout!",
     "Order has been canceled",
     "The following Item(s) are in your cart:",
-    "Confirm Purchase?" 
+    "Confirm Purchase?",
+    "Thanks you for your purchase! Enjoy your snack(s)!" 
 ]
 
 async function runVendingMachine(){
@@ -139,7 +139,11 @@ async function runVendingMachine(){
             const ss  = await userInput('purchaseStatus')
             if(ss === SelectStatus.Done) {
                 console.log(msgPrompts[7])
-                await vendingMachine(selectedProducts)
+                const confirm  = await vendingMachine(selectedProducts)
+                if(confirm === 0){
+                    console.log(msgPrompts[11])
+                    selectedProducts = []
+                }
                 break
             } else if (ss === SelectStatus.Cancel){
                 selectedProducts = []
@@ -164,7 +168,7 @@ async function vendingMachine(itemsInCart){
         totalCost += item.price
     })
     console.log(`Your total today is ${totalCost}\n${msgPrompts[10]}\n0 yes\n1 no`)
-    const confirm = userInput('confirm')
+    return await userInput('confirm')
 }
 
 runVendingMachine()
